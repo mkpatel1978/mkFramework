@@ -7,15 +7,13 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 public class setup implements ITestListener {
 
     private static ExtentReports extentReports;
     public static ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
-
-    public void onTestStart(ITestResult result) {
-        ExtentTest test = extentReports.createTest("Test Name : " + result.getTestClass().getName() + " - " + result.getMethod().getMethodName());
-        extentTest.set(test);
-    }
 
     public void onStart(ITestContext context) {
         String fileName = extentReport.getReportNameTimeStamp();
@@ -30,4 +28,26 @@ public class setup implements ITestListener {
             extentReports.flush();
 
     }
+
+    public void onTestStart(ITestResult result) {
+        ExtentTest test = extentReports.createTest("Test Name : " + result.getTestClass().getName() + " - " + result.getMethod().getMethodName());
+        extentTest.set(test);
+    }
+
+    public void onTestFailure(ITestResult result) {
+
+        extentReport.logFailDetails(result.getThrowable().getMessage());
+
+        String stackTrace = Arrays.toString(result.getThrowable().getStackTrace());
+        stackTrace = stackTrace.replaceAll(",", "<br>");
+
+        String formattedTrace = "<details>\n" +
+                "<summary>Click Here for Detailed Logs</summary>\n" +
+                "" + stackTrace + "\n" +
+                "</details>\n";
+
+        extentReport.logExceptionDetails(formattedTrace);
+
+    }
+
 }

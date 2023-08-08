@@ -8,21 +8,6 @@
     <artifactId>mkFramework</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.2</version>
-                <configuration>
-                    <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile>
-                 <!--       <forkCount>0</forkCount>-->
-                    </suiteXmlFiles>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -33,10 +18,28 @@
         <Ver_jacksondatabind>2.15.0</Ver_jacksondatabind>
         <Ver_gson>2.10</Ver_gson>
         <Ver_extentreport>5.0.9</Ver_extentreport>
-        <Ver_javafaker>1.0.2</Ver_javafaker>
+        <Ver_datafaker>1.8.0</Ver_datafaker>
         <Ver_lombok>1.18.28</Ver_lombok>
         <Ver_apachecommonlang>3.12.0</Ver_apachecommonlang>
+        <Ver_surefire>3.1.2</Ver_surefire>
     </properties>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${Ver_surefire}</version>
+                <configuration>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
@@ -74,12 +77,13 @@
             <version>${Ver_extentreport}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.github.javafaker/javafaker -->
+        <!-- https://mvnrepository.com/artifact/net.datafaker/datafaker -->
         <dependency>
-            <groupId>com.github.javafaker</groupId>
-            <artifactId>javafaker</artifactId>
-            <version>${Ver_javafaker}</version>
+            <groupId>net.datafaker</groupId>
+            <artifactId>datafaker</artifactId>
+            <version>${Ver_datafaker}</version>
         </dependency>
+
 
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>

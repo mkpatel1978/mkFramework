@@ -27,19 +27,23 @@ public class restUtils {
     private static void printRequestLogReport(RequestSpecification requestSpecification) {
         QueryableRequestSpecification queryableRequestSpecification = SpecificationQuerier.query(requestSpecification);
 
-        extentReport.logFailDetails("Endpoint : " + queryableRequestSpecification.getBaseUri());
-        extentReport.logFailDetails("Request Method : " + queryableRequestSpecification.getMethod());
-        extentReport.logFailDetails("Request Headers : " + queryableRequestSpecification.getHeaders().asList().toString());
+        extentReport.logInfoDetails("Endpoint : " + queryableRequestSpecification.getBaseUri());
+        extentReport.logInfoDetails("Request Method : " + queryableRequestSpecification.getMethod());
 
-        extentReport.logFailDetails("Request Body : ");
+        extentReport.logInfoDetails("Request Headers : ");
+        extentReport.logHeaders(queryableRequestSpecification.getHeaders().asList());
+
+        extentReport.logInfoDetails("Request Body : ");
         extentReport.logJson(queryableRequestSpecification.getBody());
     }
 
     private static void printResponseLogReport(Response response) {
-        extentReport.logFailDetails("Response Status : " + response.getStatusCode());
-        extentReport.logFailDetails("Response Headers : " + response.getHeaders().asList().toString());
+        extentReport.logInfoDetails("Response Status : " + response.getStatusCode());
 
-        extentReport.logFailDetails("Response Body : ");
+        extentReport.logInfoDetails("Response Headers : ");
+        extentReport.logHeaders(response.getHeaders().asList());
+
+        extentReport.logInfoDetails("Response Body : ");
         extentReport.logJson(response.getBody().prettyPrint());
 
     }
@@ -59,6 +63,7 @@ public class restUtils {
 
     //Overloaded method
     public static Response performPost(String endPoint, Map<String, Object> payLoad, Map<String, String> headers) {
+
         RequestSpecification requestSpecification = getRequestSpecification(endPoint, payLoad, headers);
         Response response = requestSpecification.post();
 
